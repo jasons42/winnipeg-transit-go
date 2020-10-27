@@ -42,7 +42,7 @@ type Street struct {
 }
 
 func (s StopsService) Search(ctx context.Context, query string) ([]*Stop, *http.Response, error) {
-	u := fmt.Sprintf("stops:%v")
+	u := fmt.Sprintf("stops:%v", query)
 	req, err := s.client.NewRequest(ctx, "GET", u)
 	if err != nil {
 		return nil, nil, err
