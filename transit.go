@@ -63,7 +63,7 @@ func (c *Client) NewRequest(ctx context.Context, method, urlStr string) (*http.R
 	if !strings.HasSuffix(c.BaseURL.Path, "/") {
 		return nil, fmt.Errorf("BaseURL must have a trailing slash, but %q does not", c.BaseURL)
 	}
-	url, err := c.BaseURL.Parse(urlStr)
+	url, err := c.BaseURL.Parse(urlStr + ".json")
 	if err != nil {
 		return nil, err
 	}
