@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 )
 
 type StopsService service
@@ -42,7 +43,7 @@ type Street struct {
 }
 
 func (s StopsService) Search(ctx context.Context, query string) ([]*Stop, *http.Response, error) {
-	u := fmt.Sprintf("stops:%v", query)
+	u := url.QueryEscape(fmt.Sprintf("stops:%v", query))
 	req, err := s.client.NewRequest(ctx, "GET", u)
 	if err != nil {
 		return nil, nil, err
