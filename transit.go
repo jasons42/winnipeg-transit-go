@@ -78,6 +78,9 @@ func (c *Client) NewRequest(ctx context.Context, method, urlStr string) (*http.R
 	if c.UserAgent != "" {
 		request.Header.Set("User-Agent", c.UserAgent)
 	}
+	q := request.URL.Query()
+	q.Add("api-key", c.APIKey)
+	request.URL.RawQuery = q.Encode()
 	return request, nil
 }
 
