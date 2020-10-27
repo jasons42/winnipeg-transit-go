@@ -9,8 +9,8 @@ import (
 
 type StopsService service
 
-type Stops struct {
-	Stops     []*Stop `json:"stops"`
+type StopList struct {
+	Items     []*Stop `json:"stops"`
 	QueryTime string  `json:"query-time"`
 }
 
@@ -54,11 +54,11 @@ func (s StopsService) Search(ctx context.Context, query string) ([]*Stop, *http.
 		return nil, nil, err
 	}
 
-	var stops Stops
+	var stops StopList
 	resp, err := s.client.Do(req, &stops)
 	if err != nil {
 		return nil, resp, err
 	}
 
-	return stops.Stops, resp, err
+	return stops.Items, resp, err
 }
