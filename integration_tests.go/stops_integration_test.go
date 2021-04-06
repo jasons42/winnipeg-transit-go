@@ -15,5 +15,8 @@ func TestStops_search(t *testing.T) {
 	if err != nil {
 		t.Errorf("error: %+v\nresp: %+v", err, resp)
 	}
-	t.Logf("resp: %+v\nstops: %+v", resp, stops)
+
+	if len(stops) == 0 {
+		t.Errorf("expected to get stops but found none")
+	}
 }
