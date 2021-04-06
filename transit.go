@@ -13,8 +13,8 @@ import (
 )
 
 const (
-	baseURL   = "https://api.winnipegtransit.com/v3/"
-	userAgent = "winnipeg-transit-go"
+	defaultBaseURL = "https://api.winnipegtransit.com/v3/"
+	userAgent      = "winnipeg-transit-go"
 )
 
 // A Client manages communication with the Winnipeg Transit API.
@@ -36,7 +36,7 @@ type service struct {
 // NewClient returns a new Winnipeg Transit API client for a given apiKey.
 // Users can register for an API key at https://api.winnipegtransit.com/home/users/new
 func NewClient(apiKey string) *Client {
-	parsedBaseURL, _ := url.Parse(baseURL)
+	parsedBaseURL, _ := url.Parse(defaultBaseURL)
 
 	c := &Client{
 		client:    &http.Client{},
@@ -56,6 +56,9 @@ func NewClient(apiKey string) *Client {
 func (c *Client) NewRequest(urlStr string) (*http.Request, error) {
 	if !strings.HasSuffix(c.BaseURL.Path, "/") {
 		return nil, fmt.Errorf("BaseURL must have a trailing slash, but %q does not", c.BaseURL)
+	}
+	if strings.HasPrefix(urlStr, "/") {
+		return nil, fmt.Errorf("urlStr must not have a trailing slash, but %q does", urlStr)
 	}
 	u, err := c.BaseURL.Parse(urlStr + ".json")
 	if err != nil {
