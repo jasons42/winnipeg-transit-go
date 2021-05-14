@@ -121,7 +121,7 @@ func TestDo(t *testing.T) {
 		A string
 	}
 
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/blah", func(w http.ResponseWriter, r *http.Request) {
 		testMethod(t, r, "GET")
 		fmt.Fprint(w, `{"A":"a"}`)
 	})
